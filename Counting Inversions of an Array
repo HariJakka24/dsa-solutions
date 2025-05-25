@@ -1,0 +1,31 @@
+def divideArray(arr, count):
+    mid = len(arr) // 2
+    if len(arr) <= 1:
+        return arr
+    left_arr = divideArray(arr[0:mid], count)
+    right_arr = divideArray(arr[mid:len(arr)], count)
+    return mergeAndCount(left_arr, right_arr, count)
+
+def countInversions(arr):
+    # Write your code here
+    count = [0]
+    divideArray(arr, count)
+    return count[0]
+        
+
+def mergeAndCount(arr1, arr2, count):
+    res = []
+    left = right = 0
+    l = len(arr1)
+    r = len(arr2)
+    while left < l and right < r:
+        if arr1[left] > arr2[right]:
+            count[0] += l-left
+            res.append(arr2[right])
+            right += 1
+        else:
+            res.append(arr1[left])
+            left += 1
+    res.extend(arr1[left:])
+    res.extend(arr2[right:])
+    return res
